@@ -1,7 +1,6 @@
 import pytest
 
 
-
 class TestThings:
     def test_hookup(self):
         assert 2 + 2 == 4
@@ -69,23 +68,34 @@ class TestThings:
         assert n_cols == 4
         verts = []
         for y, row in enumerate(rows):
-            yy = 2*y + 1
+            yy = 2 * y + 1
             for x, z in enumerate(row):
-                xx = 2*x + 1
+                xx = 2 * x + 1
                 verts.append((xx, yy, z))
-        assert len(verts) == n_rows*n_cols
+        assert len(verts) == n_rows * n_cols
 
     def test_face_vert_indices(self):
-        expected = [(0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (4, 8, 9, 5), (5, 9, 10, 6), (6, 10, 11, 7)]
-        n_rows = 3
+        expected = [(0, 1, 5, 4),
+                    (1, 2, 6, 5),
+                    (2, 3, 7, 6),
+                    (4, 5, 9, 8),
+                    (5, 6, 10, 9),
+                    (6, 7, 11, 10),
+                    (8, 9, 13, 12),
+                    (9, 10, 14, 13),
+                    (10, 11, 15, 14)]
+        n_rows = 4
         n_cols = 4
-        n_faces = (n_rows - 1)*(n_cols - 1)
-        assert n_faces == 6
+        n_faces = (n_rows - 1) * (n_cols - 1)
+        assert n_faces == 9
         faces = []
         for row in range(n_rows - 1):
             for col in range(n_cols - 1):
-                origin = row*n_cols + col
-                face = (origin, origin + n_cols, origin+n_cols + 1, origin + 1)
+                lower_left = row * n_cols + col
+                lower_right = lower_left + 1
+                upper_right = lower_right + n_cols
+                upper_left = upper_right - 1
+                face = (lower_left, lower_right, upper_right, upper_left)
                 faces.append(face)
         assert faces == expected
 
@@ -101,5 +111,3 @@ def line_to_ints(line):
     trim = subs[1:-1]
     ints = [int(t) for t in trim]
     return ints
-
-
