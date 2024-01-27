@@ -107,13 +107,13 @@ class TestThings:
         assert faces == expected
 
     def test_file_to_verts(self):
-        verts = file_to_verts(expanduser("~/Desktop/test_rows.txt"))
+        verts = file_to_verts_looped(expanduser("~/Desktop/test_rows.txt"))
         assert len(verts) == 16
         assert verts[0] == (1, 1, 26)
         assert verts[15] == (7, 7, 29)
 
     def test_file_to_verts_compact(self):
-        verts = file_to_verts_compact(expanduser("~/Desktop/test_rows.txt"))
+        verts = file_to_verts(expanduser("~/Desktop/test_rows.txt"))
         assert len(verts) == 16
         assert verts[0] == (1, 1, 26)
         assert verts[15] == (7, 7, 29)
@@ -126,13 +126,11 @@ def file_to_rows(name):
 
 
 def line_to_ints(line):
-    subs = line.split()
-    trim = subs[1:-1]
-    ints = [int(t) for t in trim]
-    return ints
+    return [int(t) for t in (line.split()[1:-1])]
 
 
-def file_to_verts(file_name):
+# saved to show development
+def file_to_verts_looped(file_name):
     rows = file_to_rows(file_name)
     vertices = []
     for y, row in enumerate(rows):
@@ -143,7 +141,7 @@ def file_to_verts(file_name):
     return vertices
 
 
-def file_to_verts_compact(file_name):
+def file_to_verts(file_name):
     def adj(v):
         return 2*v + 1
     rows = file_to_rows(file_name)
