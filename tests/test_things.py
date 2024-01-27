@@ -144,6 +144,8 @@ def file_to_verts(file_name):
 
 
 def file_to_verts_compact(file_name):
+    def adj(v):
+        return 2*v + 1
     rows = file_to_rows(file_name)
-    return [(2*x + 1, 2*y + 1, z) for y, row in enumerate(rows) for x, z in enumerate(row)]
+    return [(adj(x), adj(y), z) for y, row in enumerate(rows) for x, z in enumerate(row)]
 
