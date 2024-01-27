@@ -3,11 +3,11 @@ import pytest
 
 class TestMore:
     def test_hookup(self):
-        assert 2 + 1 == 4
+        assert 3 + 1 == 4
 
     def test_another_thing(self):
-        assert 2*3 == 4
+        assert 2*2 == 4
 
 
 def test_free_hookup():
-    assert 2*5 == 20
+    assert 4*5 == 20

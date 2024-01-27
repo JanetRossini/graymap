@@ -1,17 +1,21 @@
-
+from os.path import expanduser
 
 class TestThings:
     def test_hookup(self):
         assert 2 + 2 == 4
 
+    def test_home(self):
+        home = expanduser("~")
+        assert home == "/Users/ron"
+
     def test_first_read(self):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = expanduser("~/Desktop/ph-heights.txt")
         with open(name) as f:
             line = f.readline()
         assert len(line) == 520
 
     def test_trim_line(self):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = expanduser("~/Desktop/ph-heights.txt")
         with open(name) as f:
             line = f.readline()
         trim = line[4:-3]
@@ -24,7 +28,7 @@ class TestThings:
         assert ints[127] == 40
 
     def test_get_all_ints(self):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = expanduser("~/Desktop/ph-heights.txt")
         rows = []
         with open(name) as f:
             for line in f:
@@ -35,7 +39,7 @@ class TestThings:
         assert len(rows) == 128
 
     def test_simpler(self):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = expanduser("~/Desktop/ph-heights.txt")
         rows = []
         with open(name) as f:
             for line in f:
@@ -44,12 +48,12 @@ class TestThings:
         assert len(rows) == 128
 
     def test_file_to_rows(self):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = expanduser("~/Desktop/ph-heights.txt")
         rows = file_to_rows(name)
         assert len(rows) == 128
 
     def test_max_and_min(self):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = expanduser("~/Desktop/ph-heights.txt")
         rows = file_to_rows(name)
         maximum = 0
         minimum = 256
@@ -102,6 +106,18 @@ class TestThings:
                 faces.append(face)
         assert faces == expected
 
+    def test_file_to_verts(self):
+        verts = file_to_verts(expanduser("~/Desktop/test_rows.txt"))
+        assert len(verts) == 16
+        assert verts[0] == (1, 1, 26)
+        assert verts[15] == (7, 7, 29)
+
+    def test_file_to_verts_compact(self):
+        verts = file_to_verts_compact(expanduser("~/Desktop/test_rows.txt"))
+        assert len(verts) == 16
+        assert verts[0] == (1, 1, 26)
+        assert verts[15] == (7, 7, 29)
+
 
 def file_to_rows(name):
     with open(name) as f:
@@ -114,3 +130,20 @@ def line_to_ints(line):
     trim = subs[1:-1]
     ints = [int(t) for t in trim]
     return ints
+
+
+def file_to_verts(file_name):
+    rows = file_to_rows(file_name)
+    vertices = []
+    for y, row in enumerate(rows):
+        yy = 2 * y + 1
+        for x, z in enumerate(row):
+            xx = 2 * x + 1
+            vertices.append((xx, yy, z))
+    return vertices
+
+
+def file_to_verts_compact(file_name):
+    rows = file_to_rows(file_name)
+    return [(2*x + 1, 2*y + 1, z) for y, row in enumerate(rows) for x, z in enumerate(row)]
+
