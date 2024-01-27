@@ -73,6 +73,9 @@ class TestThings:
                 xx = 2 * x + 1
                 verts.append((xx, yy, z))
         assert len(verts) == n_rows * n_cols
+        assert verts[0] == (1, 1, 10)
+        assert verts[5] == (3, 3, 21)
+        assert verts[10] == (5, 5, 32)
 
     def test_face_vert_indices(self):
         expected = [(0, 1, 5, 4),
@@ -90,8 +93,9 @@ class TestThings:
         assert n_faces == 9
         faces = []
         for row in range(n_rows - 1):
+            row_origin = row * n_cols
             for col in range(n_cols - 1):
-                lower_left = row * n_cols + col
+                lower_left = row_origin + col
                 lower_right = lower_left + 1
                 upper_right = lower_right + n_cols
                 upper_left = upper_right - 1
