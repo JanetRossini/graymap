@@ -119,6 +119,13 @@ class TestThings:
         assert verts[15] == (7, 7, 29)
 
 
+def file_to_verts(file_name):
+    def adj(v):
+        return 2*v + 1
+    rows = file_to_rows(file_name)
+    return [(adj(x), adj(y), z) for y, row in enumerate(rows) for x, z in enumerate(row)]
+
+
 def file_to_rows(name):
     with open(name) as f:
         rows = [line_to_ints(line) for line in f]
@@ -139,11 +146,4 @@ def file_to_verts_looped(file_name):
             xx = 2 * x + 1
             vertices.append((xx, yy, z))
     return vertices
-
-
-def file_to_verts(file_name):
-    def adj(v):
-        return 2*v + 1
-    rows = file_to_rows(file_name)
-    return [(adj(x), adj(y), z) for y, row in enumerate(rows) for x, z in enumerate(row)]
 
