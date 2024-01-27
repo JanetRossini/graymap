@@ -7,11 +7,11 @@
 import pygame
 from pygame import Surface, Color
 
-from tests import file_to_rows
+from tests.test_things import file_to_rows
 
 
 def fill_surface(surf):
-        name = "/Users/ron/Dropbox/ph-heights.txt"
+        name = "/Users/ron/Desktop/ph-heights2.txt"
         rows = file_to_rows(name)
         for y, row in enumerate(rows):
             true_y = 127 - y
@@ -20,7 +20,11 @@ def fill_surface(surf):
                     print("red", 2*x+1, 2*y+1, z)
                     color = Color(255, 0, 0)
                 else:
-                    color = Color(2*z, 2*z, 2*z)
+                    z = z - 20  # 0 - 128
+                    z = int(4*z)
+                    if z > 255:
+                        z = 255
+                    color = Color(z, z, z)
                 # color = Color(255, 255, 255)
                 for dx in range(4):
                     for dy in range(4):

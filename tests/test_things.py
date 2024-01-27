@@ -94,6 +94,10 @@ class TestThings:
         n_cols = 4
         n_faces = (n_rows - 1) * (n_cols - 1)
         assert n_faces == 9
+        faces = self.make_faces(n_rows, n_cols)
+        assert faces == expected
+
+    def make_faces(self, n_rows, n_cols):
         faces = []
         for row in range(n_rows - 1):
             row_origin = row * n_cols
@@ -104,7 +108,7 @@ class TestThings:
                 upper_left = upper_right - 1
                 face = (lower_left, lower_right, upper_right, upper_left)
                 faces.append(face)
-        assert faces == expected
+        return faces
 
     def test_file_to_verts(self):
         verts = file_to_verts_looped(expanduser("~/Desktop/test_rows.txt"))
@@ -117,6 +121,10 @@ class TestThings:
         assert len(verts) == 16
         assert verts[0] == (1, 1, 26)
         assert verts[15] == (7, 7, 29)
+
+    def test_big_file_to_verts(self):
+        verts = file_to_verts(expanduser("~/Desktop/ph-heights2.txt"))
+        assert len(verts) == 128*128
 
 
 def file_to_verts(file_name):
