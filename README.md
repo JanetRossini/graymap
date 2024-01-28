@@ -40,6 +40,4 @@ surface in Blender.
 
 This script, executed in blender, will read the specified file and
 produce a mesh object whose x,y,z values are those in the file, with a
-face in each quad, facing toward positive z.  
-
-
+face in each quad, facing toward positive z.
