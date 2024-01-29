@@ -4,10 +4,6 @@ class TestThings:
     def test_hookup(self):
         assert 2 + 2 == 4
 
-    def test_home(self):
-        home = expanduser("~")
-        assert home == "/Users/ron"
-
     def test_first_read(self):
         name = expanduser("~/Desktop/ph-heights.txt")
         with open(name) as f:

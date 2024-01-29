@@ -1,4 +1,5 @@
 # This is a sample Python script.
+from os.path import expanduser
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
@@ -11,7 +12,7 @@ from tests.test_things import file_to_rows
 
 
 def fill_surface(surf):
-        name = "/Users/ron/Desktop/ph-heights2.txt"
+        name = expanduser("~/Desktop/ph-heights2.txt")
         rows = file_to_rows(name)
         for y, row in enumerate(rows):
             true_y = 127 - y
